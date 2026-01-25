@@ -1,266 +1,50 @@
 /* =========================================================
-   CSS VARIABLES
-   ========================================================= */
-:root {
-  /* ================= BACKGROUNDS ================= */
-  --bg-primary: #0a0d0a;      /* main page background (deep charcoal) */
-  --bg-secondary: #121712;    /* section background */
-  --bg-tertiary: #1a211a;     /* cards / surfaces */
-
-  /* ================= ACCENT (GYM ENERGY) ================= */
-  --accent: #b6ff00;         /* high-energy neon green */
-  --accent-muted: #93cc00;   /* hover / secondary accent */
-
-  /* ================= TEXT ================= */
-  --text-primary: #f5f5f5;   /* strong readable white */
-  --text-secondary: #a8b0a8; /* soft athletic gray */
-
-  /* ================= LAYOUT ================= */
-  --container-width: 1200px;
-}
-
-/* =========================================================
-   GLOBAL RESET & BASE
-   ========================================================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-}
-
-/* Make images responsive (CRITICAL) */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* =========================================================
-   UTILITIES
-   ========================================================= */
-.container {
-  max-width: var(--container-width);
-  margin: auto;
-  padding: 0 20px;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 40px;
-}
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-.btn {
-  display: inline-block;
-  padding: 12px 28px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 4px;
-  transition: 0.3s ease;
-}
-
-.btn-primary {
-  background-color: none;
-  color: #000;
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-muted);
-  transform: translateY(-2px);
-}
-
-
-.btn-secondary {
-  border: 2px solid var(--accent);
-  color: var(--accent);
-}
-
-.btn-secondary:hover {
-  background-color: var(--accent);
-  color: #000;
-}
-
-/* =========================================================
-   HEADER & NAVIGATION
-   ========================================================= */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.9);
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 70px;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.logo span {
-  color: var(--accent);
-}
-
-.nav a {
-  color: var(--text-secondary);
-  text-decoration: none;
-  margin: 0 12px;
-  transition: 0.3s;
-}
-
-.nav a:hover,
-.nav a.active {
-  color: var(--accent);
-}
-
-/* =========================================================
-   HERO SECTION
-   ========================================================= */
-/* =========================================================
-   HERO SECTION (HOME)
+   HOME HERO — REFINED & PREMIUM
    ========================================================= */
 
 .home .hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 92vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.65),
-      rgba(0, 0, 0, 0.75)
+
+  background:
+    linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.55)
     ),
-    url("../assets/images/ChatGPT\ Image\ Jan\ 25\,\ 2026\,\ 09_28_42\ PM.png") center / cover no-repeat;
+    url("../assets/images/hero-home.jpg") center / cover no-repeat;
 }
 
 /* Content container */
 .home .hero-content {
-  max-width: 640px;
-  z-index: 2;
+  max-width: 620px;
 }
 
-/* Headline */
+/* Headline — STRONG BUT CONTROLLED */
 .home .hero h1 {
-  font-size: 3.6rem;
+  font-size: 3.2rem;
   font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
+  line-height: 1.12;
+  letter-spacing: -0.6px;
+  margin-bottom: 18px;
 }
 
-/* Accent word */
 .home .hero h1 span {
   color: var(--accent);
 }
 
-/* Supporting text */
+/* Subheadline — CALM SUPPORT */
 .home .hero p {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text-secondary);
-  max-width: 520px;
-  margin-bottom: 36px;
+  max-width: 500px;
+  margin-bottom: 42px;
 }
 
-.home .hero-actions {
-  display: flex;
-  gap: 12px;                 /* reduced spacing */
-  align-items: center;
-}
+/* ===*
 
-/* Tone down button presence */
-.home .hero-actions .btn {
-  padding: 12px 28px;        /* less bulky */
-  font-size: 0.9rem;         /* quieter typography */
-  font-weight: 600;          /* not heavy */
-  letter-spacing: 0.3px;
-}
-
-/* Reduce visual dominance of secondary CTA */
-.home .hero-actions .btn-secondary {
-  border-width: 1.5px;
-  opacity: 0.85;
-}
-
-/* Subtle hover only */
-.home .hero-actions .btn:hover {
-  transform: translateY(-1px);
-}@media (max-width: 768px) {
-
-  .home .hero-actions {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .home .hero-actions .btn {
-    width: auto;             /* avoid full-width shouting */
-  }
-}
-
-
-/* Buttons refinement */
-.home .hero-actions .btn {
-  padding: 14px 34px;
-  font-size: 0.95rem;
-  letter-spacing: 0.5px;
-}
-
-/* Subtle interaction polish */
-.home .hero-actions .btn-primary:hover {
-  transform: translateY(-2px);
-}
-
-.home .hero-actions .btn-secondary:hover {
-  transform: translateY(-2px);
-}
-
-/* =========================================================
-   RESPONSIVE REFINEMENT
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-  .home .hero {
-    min-height: 80vh;
-    padding-top: 100px;
-  }
-
-  .home .hero h1 {
-    font-size: 2.3rem;
-  }
-
-  .home .hero p {
-    font-size: 0.95rem;
-  }
-
-  .home .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .home .hero-actions .btn {
-    width: 100%;
-    text-align: center;
-  }
-}
 
 /* =========================================================
    STATS SECTION
