@@ -13,20 +13,30 @@
 <body class="contact">
 
   <!-- ================= HEADER ================= -->
-  <header class="header">
-    <div class="container header-inner">
-      <div class="logo">GYM<span>TEAM</span></div>
+ <header class="header">
+  <div class="container header-inner">
 
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="Programs.html">Programs</a>
-        <a href="Trainers.html">Trainers</a>
-        <a href="Contact.html" class="active">Contact</a>
-      </nav>
+    <div class="logo">GYM<span>TEAM</span></div>
 
-      <a href="Contact.html" class="btn btn-primary">Free Trial</a>
-    </div>
-  </header>
+    <nav class="nav" id="navMenu">
+      <a href="index.html" class="active">Home</a>
+      <a href="Programs.html">Programs</a>
+      <a href="Trainers.html">Trainers</a>
+      <a href="Contact.html">Contact</a>
+    </nav>
+
+   
+
+    <!-- HAMBURGER ICON -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</header>
+
 
   <!-- ================= PAGE HERO ================= -->
  <!-- ================= PAGE HERO ================= -->
@@ -104,6 +114,23 @@
 
     <p class="copyright">© 2026 GymTeam. All rights reserved.</p>
   </footer>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("navToggle");
+    const nav = document.getElementById("navMenu");
+
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      nav.classList.toggle("active");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+        nav.classList.remove("active");
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
