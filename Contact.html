@@ -9,25 +9,21 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<!-- 🔒 Page scoping -->
 <body class="contact">
 
-  <!-- ================= HEADER ================= -->
- <header class="header">
+<!-- ================= HEADER ================= -->
+<header class="header">
   <div class="container header-inner">
 
     <div class="logo">GYM<span>TEAM</span></div>
 
     <nav class="nav" id="navMenu">
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="Programs.html">Programs</a>
       <a href="Trainers.html">Trainers</a>
-      <a href="Contact.html">Contact</a>
+      <a href="Contact.html" class="active">Contact</a>
     </nav>
 
-   
-
-    <!-- HAMBURGER ICON -->
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
       <span></span>
       <span></span>
@@ -37,9 +33,7 @@
   </div>
 </header>
 
-
-  <!-- ================= PAGE HERO ================= -->
- <!-- ================= PAGE HERO ================= -->
+<!-- ================= PAGE HERO ================= -->
 <section class="page-hero"
   style="
     min-height: 55vh;
@@ -58,62 +52,63 @@
   </div>
 </section>
 
+<!-- ================= CONTACT SECTION ================= -->
+<section class="contact-section">
+  <div class="container contact-grid">
 
-  <!-- ================= CONTACT SECTION ================= -->
-  <section class="contact-section">
-    <div class="container contact-grid">
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <h3>Get In Touch</h3>
+      <p>We’re here to help you achieve your fitness goals.</p>
 
-      <!-- Contact Info -->
-      <div class="contact-info">
-        <h3>Get In Touch</h3>
-        <p>We’re here to help you achieve your fitness goals.</p>
-
-        <p><strong>Email:</strong> info@gymteam.com</p>
-        <p><strong>Phone:</strong> +91 90000 00000</p>
-        <p><strong>Address:</strong> Pune, Maharashtra, India</p>
-      </div>
-
-      <!-- Contact Form -->
-      <form class="contact-form">
-        <h3>Send a Message</h3>
-
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-        <input type="text" placeholder="Subject">
-        <textarea rows="5" placeholder="Your Message" required></textarea>
-
-        <button type="submit" class="btn btn-primary">Send Message</button>
-      </form>
-
-    </div>
-  </section>
-
-  <!-- ================= CTA ================= -->
-  <section class="cta">
-    <div class="container cta-box">
-      <h2>Ready to Start Training?</h2>
-      <a href="Programs.html" class="btn btn-primary">View Programs</a>
-    </div>
-  </section>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div>
-        <h3>GYMTEAM</h3>
-        <p>Professional fitness training for real results.</p>
-      </div>
-
-      <div>
-        <h4>Quick Links</h4>
-        <a href="index.html">Home</a>
-        <a href="Programs.html">Programs</a>
-        <a href="Trainers.html">Trainers</a>
-      </div>
+      <p><strong>Email:</strong> info@gymteam.com</p>
+      <p><strong>Phone:</strong> +91 90000 00000</p>
+      <p><strong>Address:</strong> Pune, Maharashtra, India</p>
     </div>
 
-    <p class="copyright">© 2026 GymTeam. All rights reserved.</p>
-  </footer>
+    <!-- Contact Form -->
+    <form class="contact-form" id="contactForm">
+      <h3>Send a Message</h3>
+
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="subject" placeholder="Subject" required>
+      <textarea rows="5" name="message" placeholder="Your Message" required></textarea>
+
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta">
+  <div class="container cta-box">
+    <h2>Ready to Start Training?</h2>
+    <a href="Programs.html" class="btn btn-primary">View Programs</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>GYMTEAM</h3>
+      <p>Professional fitness training for real results.</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="Programs.html">Programs</a>
+      <a href="Trainers.html">Trainers</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+  </div>
+
+  <p class="copyright">© 2026 GymTeam. All rights reserved.</p>
+</footer>
+
+<!-- ================= NAV JS ================= -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const toggle = document.getElementById("navToggle");
@@ -129,6 +124,37 @@
         nav.classList.remove("active");
       }
     });
+  });
+</script>
+
+<!-- ================= FIREBASE (CONTACT PAGE ONLY) ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    await addDoc(collection(db, "messages"), {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      subject: e.target.subject.value,
+      message: e.target.message.value,
+      createdAt: new Date()
+    });
+
+    alert("Message sent successfully!");
+    e.target.reset();
   });
 </script>
 
