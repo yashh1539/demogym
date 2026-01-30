@@ -1,133 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us | GymTeam</title>
-
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="contact">
 
-<!-- ================= HEADER ================= -->
 <header class="header">
   <div class="container header-inner">
-
     <div class="logo">GYM<span>TEAM</span></div>
-
-    <nav class="nav" id="navMenu">
+    <nav class="nav">
       <a href="index.html">Home</a>
       <a href="Programs.html">Programs</a>
       <a href="Trainers.html">Trainers</a>
       <a href="Contact.html" class="active">Contact</a>
     </nav>
-
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
   </div>
 </header>
 
-<!-- ================= PAGE HERO ================= -->
-<section class="page-hero"
-  style="
-    min-height: 55vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background:
-      linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-      url('assets/images/contact.webp') center / cover no-repeat;
-  "
->
-  <div class="container">
-    <h1>Contact Us</h1>
-    <p>Get in touch with us and start your fitness journey.</p>
-  </div>
-</section>
-
-<!-- ================= CONTACT SECTION ================= -->
 <section class="contact-section">
   <div class="container contact-grid">
 
-    <!-- Contact Info -->
     <div class="contact-info">
       <h3>Get In Touch</h3>
-      <p>We’re here to help you achieve your fitness goals.</p>
-
-      <p><strong>Email:</strong> info@gymteam.com</p>
-      <p><strong>Phone:</strong> +91 90000 00000</p>
-      <p><strong>Address:</strong> Pune, Maharashtra, India</p>
+      <p>Email: info@gymteam.com</p>
+      <p>Phone: +91 90000 00000</p>
     </div>
 
-    <!-- Contact Form -->
-    <form class="contact-form" id="contactForm">
-      <h3>Send a Message</h3>
-
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <input type="text" name="subject" placeholder="Subject" required>
-      <textarea rows="5" name="message" placeholder="Your Message" required></textarea>
-
-      <button type="submit" class="btn btn-primary">Send Message</button>
+    <form id="contactForm" class="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <input type="text" name="subject" placeholder="Subject" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
     </form>
 
   </div>
 </section>
 
-<!-- ================= CTA ================= -->
-<section class="cta">
-  <div class="container cta-box">
-    <h2>Ready to Start Training?</h2>
-    <a href="Programs.html" class="btn btn-primary">View Programs</a>
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <h3>GYMTEAM</h3>
-      <p>Professional fitness training for real results.</p>
-    </div>
-
-    <div>
-      <h4>Quick Links</h4>
-      <a href="Programs.html">Programs</a>
-      <a href="Trainers.html">Trainers</a>
-      <a href="Contact.html">Contact</a>
-    </div>
-  </div>
-
-  <p class="copyright">© 2026 GymTeam. All rights reserved.</p>
-</footer>
-
-<!-- ================= NAV JS ================= -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.getElementById("navToggle");
-    const nav = document.getElementById("navMenu");
-
-    toggle.addEventListener("click", function (e) {
-      e.stopPropagation();
-      nav.classList.toggle("active");
-    });
-
-    document.addEventListener("click", function (e) {
-      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-        nav.classList.remove("active");
-      }
-    });
-  });
-</script>
-
-<!-- ================= FIREBASE (CONTACT PAGE ONLY) ================= -->
+<!-- ✅ FIREBASE ONLY -->
 <script type="module">
   console.log("🔥 Firebase script loaded");
 
@@ -144,37 +58,28 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("contactForm");
+  const form = document.getElementById("contactForm");
 
-    if (!form) {
-      console.error("❌ contactForm not found");
-      return;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "messages"), {
+        name: form.name.value,
+        email: form.email.value,
+        subject: form.subject.value,
+        message: form.message.value,
+        createdAt: new Date()
+      });
+
+      alert("✅ Message sent successfully!");
+      form.reset();
+    } catch (err) {
+      console.error("❌ Firestore error:", err);
+      alert("❌ Failed to send message");
     }
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      try {
-        await addDoc(collection(db, "messages"), {
-          name: form.name.value,
-          email: form.email.value,
-          subject: form.subject.value,
-          message: form.message.value,
-          createdAt: new Date()
-        });
-
-        alert("✅ Message sent successfully!");
-        form.reset();
-      } catch (err) {
-        console.error("❌ Firestore error:", err);
-        alert("❌ Failed to send message. Check console.");
-      }
-    });
   });
 </script>
-
-
 
 </body>
 </html>
