@@ -129,34 +129,52 @@
 
 <!-- ================= FIREBASE (CONTACT PAGE ONLY) ================= -->
 <script type="module">
+  console.log("🔥 Firebase script loaded");
+
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "PASTE_YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBv-hTitePPtMsRn4lky_kV_-7QzUnHmc0",
+    authDomain: "demogym-contact.firebaseapp.com",
+    projectId: "demogym-contact",
+    appId: "1:160766278804:web:e54f28b4fd6be8d319c881"
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  document.getElementById("contactForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm");
 
-    await addDoc(collection(db, "messages"), {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
-      createdAt: new Date()
+    if (!form) {
+      console.error("❌ contactForm not found");
+      return;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      try {
+        await addDoc(collection(db, "messages"), {
+          name: form.name.value,
+          email: form.email.value,
+          subject: form.subject.value,
+          message: form.message.value,
+          createdAt: new Date()
+        });
+
+        alert("✅ Message sent successfully!");
+        form.reset();
+      } catch (err) {
+        console.error("❌ Firestore error:", err);
+        alert("❌ Failed to send message. Check console.");
+      }
     });
-
-    alert("Message sent successfully!");
-    e.target.reset();
   });
 </script>
+
+
 
 </body>
 </html>
